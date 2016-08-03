@@ -7,7 +7,7 @@ public class Robot {
 
     public Robot(int robotNumber, int charge, int action) {
         this.robotNumber = robotNumber;
-        this.charge = charge;
+        this.charge = 50;
         this.action = action;
     }
 
@@ -41,11 +41,11 @@ public class Robot {
         this.action = action;
     }
 
-    public boolean isWork() {
+    public boolean isWorking() {
         return work;
     }
 
-    public void setWork(boolean work) {
+    public void setWorking(boolean work) {
         this.work = work;
     }
 }
