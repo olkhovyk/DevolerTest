@@ -18,4 +18,5 @@ public class Strategy {
 
     public void gentleman(){}
 
+
 }
