@@ -27,8 +27,8 @@ public class Table  {
     }
 
     public void setRobotStrategy() throws IOException {
-        System.out.println("Введите номера стратегий (1-3) для 6 роботов");
-        System.out.println("Или 0 - для выхода");
+        System.out.println("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂР° СЃС‚СЂР°С‚РµРіРёР№ (1-3) РґР»СЏ 6 СЂРѕР±РѕС‚РѕРІ");
+        System.out.println("РР»Рё 0 - РґР»СЏ РІС‹С…РѕРґР°");
         while (i != 6){
             j = Integer.parseInt(reader.readLine());
             if(j == 1 || j == 2 || j ==3){
@@ -40,7 +40,7 @@ public class Table  {
                 break;
             }
             else {
-                System.out.println("Введено неправильное число, повторите ввод");
+                System.out.println("Р’РІРµРґРµРЅРѕ РЅРµРїСЂР°РІРёР»СЊРЅРѕРµ С‡РёСЃР»Рѕ, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ");
             }
         }
         for (int i = 0; i < robotsStrategy.size(); i++){
