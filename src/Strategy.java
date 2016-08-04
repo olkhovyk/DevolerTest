@@ -12,11 +12,17 @@ public class Strategy {
         }
     }
 
-    public void random(){}
+    public void random(){
+        System.out.println("Strategy random");
+    }
 
-    public void greedy(){}
+    public void greedy(){
+        System.out.println("Strategy greedy");
+    }
 
-    public void gentleman(){}
+    public void gentleman(){
+        System.out.println("Strategy gentleman");
+    }
 
 
 }

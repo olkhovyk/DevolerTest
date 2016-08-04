@@ -1,12 +1,15 @@
 
 
 public class Robot {
+    private Strategy strategy;
     private int robotNumber;
     private int charge;
     private int action;
     private boolean work;
-
-        public Robot(int robotNumber, int charge, int action) {
+    double i;
+        public Robot(int robotNumber, int action) {
+            strategy = new Strategy();
+            strategy.strategy(action);
             this.robotNumber = robotNumber;
             this.charge = 50;
             this.action = action;
@@ -46,13 +49,15 @@ public class Robot {
     }
         public void chargingRobot(){
             setCharge(charge +=10);
-        };
+        }
 
-        public void sleep(int i){
-            i = (int) Math.random() * 300/100;
+        public void sleep() {
 
-            System.out.println("Sleep " + i + "mc");
-        };
+            i =  Math.random() * 300;
+            int s = (int) i;
+            if(s <= 100) {s = 100;}
+            System.out.println("Sleep " + s + "mc");
+        }
 
-        public void function(){};
+        public void function(){}
 }
