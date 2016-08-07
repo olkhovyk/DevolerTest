@@ -9,7 +9,6 @@ public class Test {
     Table table = new Table();
 
     public void run() throws IOException {
-        table.run();
 
     }
 }

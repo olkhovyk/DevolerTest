@@ -29,6 +29,8 @@ public class Table  {
         }
         for(int i = 0; i <= 5; i++){
             robots.add(new Robot(i, robotsStrategy.get(i), false, false));
+            Thread t = new Thread(robots.get(i));
+            t.start();
         }
         for (int i = 0; i <=5; i++){
             parts.add(new Part(i, false));
@@ -88,17 +90,6 @@ public class Table  {
     public List<Part> getParts() {
         return parts;
     }
-
-    protected void run(){
-        for(int j = 0; j <= 5; j++){
-            robots.get(j).run();
-        }
-
-
-    }
-
-
-
 
 
 }
