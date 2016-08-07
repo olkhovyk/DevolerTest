@@ -1,6 +1,7 @@
 
 
 public class Robot {
+    Table table;
     private Strategy strategy;
     private int robotNumber;
     private int charge;
@@ -16,7 +17,6 @@ public class Robot {
             this.charge = 50;
             this.action = action;
         }
-
 
         public int getRobotNumber() {
         return robotNumber;
@@ -70,19 +70,54 @@ public class Robot {
             setCharge(charge +=10);
         }
 
-        public void sleep(Thread thread) {
+    public void randomSleep(Thread thread) {
             i =  Math.random() * 3;
             int s = (int) i;
-            if(s <= 1) {s = 10000;}
-            else if(s > 1 && s <=2){s=20000;}
-            else {s=30000;}
+            if(s <= 1) {s = 100;}
+            else if(s > 1 && s <=2){s=200;}
+            else {s=300;}
             try {
                 thread.sleep(s);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Sleep " + s + "mc");
+
+    }
+
+    public void sleep(Thread thread, int i){
+        try {
+            thread.sleep(i);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        public void function(){}
+    }
+
+    protected void takeRightPart(int robot){
+        try {
+            if(!table.getParts().get(table.getRobots().get(robot).getRobotNumber()+1).isPartWorking())
+            {
+                table.getParts().get(table.getRobots().get(robot).getRobotNumber()+1).setPartWorking(true);
+                table.getRobots().get(table.getRobots().get(robot).getRobotNumber()).setRightHand(true);
+            }
+        }
+        catch (IndexOutOfBoundsException e){
+            if(!table.getParts().get(0).isPartWorking())
+            {
+                table.getParts().get(0).setPartWorking(true);
+                table.getRobots().get(table.getRobots().get(robot).getRobotNumber()).setRightHand(true);
+            }
+        }
+    }
+
+    protected void takeLeftPart(int robot){
+        if(!table.getParts().get(table.getRobots().get(robot).getRobotNumber()).isPartWorking())
+        {
+            table.getParts().get(table.getRobots().get(robot).getRobotNumber()).setPartWorking(true);
+            table.getRobots().get(table.getRobots().get(robot).getRobotNumber()).setLeftHand(true);
+        }
+    }
+
+
+    public void function(){}
 }

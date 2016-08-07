@@ -9,7 +9,7 @@ public class DevolerTest {
 
     public static void main(String[] args) throws IOException {
         Test test = new Test();
-
+        test.run();
     }
 
 

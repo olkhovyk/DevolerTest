@@ -8,14 +8,19 @@ import java.util.List;
  * Created by ilya on 03.08.2016.
  */
 public class Table  {
-    public List<Integer> robotsStrategy = new ArrayList<>();
-    public List<Robot> robots = new ArrayList<>();
-    public List<Part> parts = new ArrayList<>();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    public List<Integer> robotsStrategy;
+    public List<Robot> robots;
+    public List<Part> parts;
+    BufferedReader reader;
     int i = 0;
     int j;
 
+
     public Table() {
+        robotsStrategy = new ArrayList<>();
+        robots = new ArrayList<>();
+        parts = new ArrayList<>();
+        reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             setRobotStrategy();
         } catch (IOException e) {
@@ -27,16 +32,6 @@ public class Table  {
         for (int i = 0; i <=5; i++){
             parts.add(new Part(i, false));
         }
-        for (int i = 0; i <= 5; i++){
-            System.out.println(parts.get(i).isPartWorking());
-        }
-        for (int i = 0; i <=5; i++){
-            takeRightPart(i);
-        }
-        for (int i = 0; i <= 5; i++){
-            System.out.println(parts.get(i).isPartWorking());
-        }
-
 
     }
 
@@ -60,32 +55,49 @@ public class Table  {
         for (int i = 0; i < robotsStrategy.size(); i++){
             System.out.println(robotsStrategy.get(i));
         }
+        reader.close();
     }
 
-    private void takeLeftPart(int robot){
-        if(!parts.get(robots.get(robot).getRobotNumber()).isPartWorking())
+    protected void takeLeftPart(int idRobot){
+        if(!parts.get(robots.get(idRobot).getRobotNumber()).isPartWorking())
             {
-        parts.get(robots.get(robot).getRobotNumber()).setPartWorking(true);
-        robots.get(robots.get(robot).getRobotNumber()).setLeftHand(true);
+        parts.get(robots.get(idRobot).getRobotNumber()).setPartWorking(true);
+        robots.get(robots.get(idRobot).getRobotNumber()).setLeftHand(true);
         }
     }
 
-    private void takeRightPart(int robot){
+    protected void takeRightPart(int idRobot){
        try {
-           if(!parts.get(robots.get(robot).getRobotNumber()).isPartWorking())
+           if(!parts.get(robots.get(idRobot).getRobotNumber()+1).isPartWorking())
            {
-           parts.get(robots.get(robot).getRobotNumber()+1).setPartWorking(true);
-           robots.get(robots.get(robot).getRobotNumber()).setRightHand(true);
+           parts.get(robots.get(idRobot).getRobotNumber()+1).setPartWorking(true);
+           robots.get(robots.get(idRobot).getRobotNumber()).setRightHand(true);
            }
        }
         catch (IndexOutOfBoundsException e){
             if(!parts.get(0).isPartWorking())
             {
             parts.get(0).setPartWorking(true);
-            robots.get(robots.get(robot).getRobotNumber()).setRightHand(true);
+            robots.get(robots.get(idRobot).getRobotNumber()).setRightHand(true);
             }
         }
     }
+
+    public List<Robot> getRobots() {
+        return robots;
+    }
+
+    public List<Part> getParts() {
+        return parts;
+    }
+
+    protected void run(){
+        robots.get(1).takeLeftPart(1);
+        robots.get(1).takeRightPart(1);
+
+    }
+
+
 
 
 
