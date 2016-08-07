@@ -68,7 +68,7 @@ public class Robot implements Runnable {
             setCharge(charge +=10);
         }
 
-    public void randomSleep(Thread thread) {
+    public void randomSleep() {
             i =  Math.random() * 3;
             int s = (int) i;
             if(s <= 1) {s = 100;}
@@ -82,7 +82,7 @@ public class Robot implements Runnable {
 
     }
 
-    public void sleep(Thread thread, int i){
+    public void sleep(int i){
         try {
             Thread.currentThread().sleep(i);
         } catch (InterruptedException e) {
@@ -140,4 +140,6 @@ public class Robot implements Runnable {
     public void run() {
         strategy(action);
     }
+
+
 }

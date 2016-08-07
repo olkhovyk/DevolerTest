@@ -90,13 +90,10 @@ public class Table  {
     }
 
     protected void run(){
-        int i =0;
-        while (i !=10){
-            for(int j = 0; j <= 5; j++){
-                robots.get(j).run();
-            }
-            i++;
+        for(int j = 0; j <= 5; j++){
+            robots.get(j).run();
         }
+
 
     }
 
