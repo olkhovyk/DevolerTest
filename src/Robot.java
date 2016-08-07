@@ -1,6 +1,6 @@
 
 
-public class Robot {
+public class Robot implements Runnable {
     Table table;
     private int robotNumber;
     private int charge;
@@ -13,7 +13,6 @@ public class Robot {
             this.robotNumber = robotNumber;
             this.charge = 50;
             this.action = action;
-            strategy(action);
 
         }
 
@@ -76,7 +75,7 @@ public class Robot {
             else if(s > 1 && s <=2){s=200;}
             else {s=300;}
             try {
-                thread.sleep(s);
+                Thread.currentThread().sleep(s);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -85,7 +84,7 @@ public class Robot {
 
     public void sleep(Thread thread, int i){
         try {
-            thread.sleep(i);
+            Thread.currentThread().sleep(i);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -117,9 +116,6 @@ public class Robot {
         }
     }
 
-
-    public void function(){}
-
     public void strategy(int strategy){
         if(strategy == 1){random();}
         else if (strategy == 2){greedy();}
@@ -138,5 +134,10 @@ public class Robot {
 
     public void gentleman(){
         System.out.println("Strategy gentleman");
+    }
+
+    @Override
+    public void run() {
+        strategy(action);
     }
 }

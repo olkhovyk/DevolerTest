@@ -16,6 +16,7 @@ public class Table  {
     int j;
 
 
+
     public Table() {
         robotsStrategy = new ArrayList<>();
         robots = new ArrayList<>();
@@ -89,7 +90,13 @@ public class Table  {
     }
 
     protected void run(){
-
+        int i =0;
+        while (i !=10){
+            for(int j = 0; j <= 5; j++){
+                robots.get(j).run();
+            }
+            i++;
+        }
 
     }
 
