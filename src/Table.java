@@ -52,9 +52,6 @@ public class Table  {
                 System.out.println("Введено неправильное число, повторите ввод");
             }
         }
-        for (int i = 0; i < robotsStrategy.size(); i++){
-            System.out.println(robotsStrategy.get(i));
-        }
         reader.close();
     }
 
@@ -92,8 +89,7 @@ public class Table  {
     }
 
     protected void run(){
-        robots.get(1).takeLeftPart(1);
-        robots.get(1).takeRightPart(1);
+
 
     }
 

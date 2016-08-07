@@ -2,7 +2,6 @@
 
 public class Robot {
     Table table;
-    private Strategy strategy;
     private int robotNumber;
     private int charge;
     private int action;
@@ -11,11 +10,11 @@ public class Robot {
     private boolean rightHand;
     double i;
         public Robot(int robotNumber, int action, boolean leftHand, boolean rightHand) {
-            strategy = new Strategy();
-            strategy.strategy(action);
             this.robotNumber = robotNumber;
             this.charge = 50;
             this.action = action;
+            strategy(action);
+
         }
 
         public int getRobotNumber() {
@@ -120,4 +119,24 @@ public class Robot {
 
 
     public void function(){}
+
+    public void strategy(int strategy){
+        if(strategy == 1){random();}
+        else if (strategy == 2){greedy();}
+        else if(strategy == 3){gentleman();}
+        else {
+            System.out.println("Wrong strategy");
+        }
+    }
+    public void random(){
+        System.out.println("Strategy random");
+    }
+
+    public void greedy(){
+        System.out.println("Strategy greedy");
+    }
+
+    public void gentleman(){
+        System.out.println("Strategy gentleman");
+    }
 }
