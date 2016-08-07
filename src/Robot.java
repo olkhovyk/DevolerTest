@@ -6,8 +6,10 @@ public class Robot {
     private int charge;
     private int action;
     private boolean work;
+    private boolean leftHand;
+    private boolean rightHand;
     double i;
-        public Robot(int robotNumber, int action) {
+        public Robot(int robotNumber, int action, boolean leftHand, boolean rightHand) {
             strategy = new Strategy();
             strategy.strategy(action);
             this.robotNumber = robotNumber;
@@ -47,15 +49,38 @@ public class Robot {
         public void setWorking(boolean work) {
         this.work = work;
     }
-        public void chargingRobot(){
+
+    public boolean isLeftHand() {
+        return leftHand;
+    }
+
+    public void setLeftHand(boolean leftHand) {
+        this.leftHand = leftHand;
+    }
+
+    public boolean isRightHand() {
+        return rightHand;
+    }
+
+    public void setRightHand(boolean rightHand) {
+        this.rightHand = rightHand;
+    }
+
+    public void chargingRobot(){
             setCharge(charge +=10);
         }
 
-        public void sleep() {
-
-            i =  Math.random() * 300;
+        public void sleep(Thread thread) {
+            i =  Math.random() * 3;
             int s = (int) i;
-            if(s <= 100) {s = 100;}
+            if(s <= 1) {s = 10000;}
+            else if(s > 1 && s <=2){s=20000;}
+            else {s=30000;}
+            try {
+                thread.sleep(s);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("Sleep " + s + "mc");
         }
 

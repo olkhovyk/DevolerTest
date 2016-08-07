@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
  */
 public class Test {
     Table table = new Table();
-    public void run() throws IOException {
 
+    public void run() throws IOException {
     }
 }

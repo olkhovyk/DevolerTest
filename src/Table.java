@@ -10,6 +10,7 @@ import java.util.List;
 public class Table  {
     public List<Integer> robotsStrategy = new ArrayList<>();
     public List<Robot> robots = new ArrayList<>();
+    public List<Part> parts = new ArrayList<>();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     int i = 0;
     int j;
@@ -21,12 +22,25 @@ public class Table  {
             e.printStackTrace();
         }
         for(int i = 0; i <= 5; i++){
-            robots.add(new Robot(i+1, robotsStrategy.get(i)));
+            robots.add(new Robot(i, robotsStrategy.get(i), false, false));
         }
+        for (int i = 0; i <=5; i++){
+            parts.add(new Part(i, false));
+        }
+        for (int i = 0; i <= 5; i++){
+            System.out.println(parts.get(i).isPartWorking());
+        }
+        for (int i = 0; i <=5; i++){
+            takeRightPart(i);
+        }
+        for (int i = 0; i <= 5; i++){
+            System.out.println(parts.get(i).isPartWorking());
+        }
+
 
     }
 
-    public void setRobotStrategy() throws IOException {
+    private void setRobotStrategy() throws IOException {
         System.out.println("Введите номера стратегий (1-3) для 6 роботов");
         System.out.println("Или 0 - для выхода");
         while (i != 6){
@@ -37,7 +51,7 @@ public class Table  {
             }
             else if (j == 0){
                 System.out.println("Exit");
-                break;
+                System.exit(0);
             }
             else {
                 System.out.println("Введено неправильное число, повторите ввод");
@@ -47,6 +61,32 @@ public class Table  {
             System.out.println(robotsStrategy.get(i));
         }
     }
+
+    private void takeLeftPart(int robot){
+        if(!parts.get(robots.get(robot).getRobotNumber()).isPartWorking())
+            {
+        parts.get(robots.get(robot).getRobotNumber()).setPartWorking(true);
+        robots.get(robots.get(robot).getRobotNumber()).setLeftHand(true);
+        }
+    }
+
+    private void takeRightPart(int robot){
+       try {
+           if(!parts.get(robots.get(robot).getRobotNumber()).isPartWorking())
+           {
+           parts.get(robots.get(robot).getRobotNumber()+1).setPartWorking(true);
+           robots.get(robots.get(robot).getRobotNumber()).setRightHand(true);
+           }
+       }
+        catch (IndexOutOfBoundsException e){
+            if(!parts.get(0).isPartWorking())
+            {
+            parts.get(0).setPartWorking(true);
+            robots.get(robots.get(robot).getRobotNumber()).setRightHand(true);
+            }
+        }
+    }
+
 
 
 }
