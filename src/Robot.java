@@ -1,6 +1,7 @@
 
 
 public class Robot implements Runnable {
+    public final static int MAX_CHARGE = 100;
     Table table;
     private int robotNumber;
     private int charge;
@@ -9,10 +10,11 @@ public class Robot implements Runnable {
     private boolean leftHand;
     private boolean rightHand;
     double i;
-        public Robot(int robotNumber, int action, boolean leftHand, boolean rightHand) {
+        public Robot(int robotNumber, int action, boolean leftHand, boolean rightHand, Table table, int charge) {
             this.robotNumber = robotNumber;
-            this.charge = 50;
+            this.charge = charge;
             this.action = action;
+            this.table = table;
 
         }
 
@@ -116,6 +118,30 @@ public class Robot implements Runnable {
         }
     }
 
+    protected void releaseLeftPart(int robot){
+        if(table.getParts().get(table.getRobots().get(robot).getRobotNumber()).isPartWorking())
+        {
+            table.getParts().get(table.getRobots().get(robot).getRobotNumber()).setPartWorking(false);
+            table.getRobots().get(table.getRobots().get(robot).getRobotNumber()).setLeftHand(false);
+        }
+    }
+    protected void releaseRightPart(int robot){
+        try {
+            if(table.getParts().get(table.getRobots().get(robot).getRobotNumber()+1).isPartWorking())
+            {
+                table.getParts().get(table.getRobots().get(robot).getRobotNumber()+1).setPartWorking(false);
+                table.getRobots().get(table.getRobots().get(robot).getRobotNumber()).setRightHand(false);
+            }
+        }
+        catch (IndexOutOfBoundsException e){
+            if(!table.getParts().get(0).isPartWorking())
+            {
+                table.getParts().get(0).setPartWorking(false);
+                table.getRobots().get(table.getRobots().get(robot).getRobotNumber()).setRightHand(false);
+            }
+        }
+    }
+
     public void strategy(int strategy){
         if(strategy == 1){random();}
         else if (strategy == 2){greedy();}
@@ -125,15 +151,102 @@ public class Robot implements Runnable {
         }
     }
     public void random(){
-        System.out.println("Strategy random");
+        for(int i = 0; i <=5; i++) {
+            if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
+                releaseLeftPart(i);
+                releaseRightPart(i);
+            }
+            if(table.getRobots().get(i).getAction() == 1){
+            if (table.getRobots().get(i).getCharge() < MAX_CHARGE) {
+                    takeLeftPart(i);
+                    takeRightPart(i);
+                }
+            }
+            if (table.getRobots().get(i).isLeftHand() && table.getRobots().get(i).isRightHand()){
+                table.getRobots().get(i).chargingRobot();
+            }
+
+        }
+        for (int i = 0; i <= 5; i++){
+            if(table.getRobots().get(i).getAction() == 1){
+                releaseLeftPart(i);
+                releaseRightPart(i);
+            }
+        }
+        randomSleep();
     }
 
     public void greedy(){
-        System.out.println("Strategy greedy");
+        for(int i = 0; i <=5; i++){
+            if(table.getRobots().get(i).getAction() == 2){
+                if (table.getRobots().get(i).getCharge() < 60) {
+                    takeLeftPart(i);
+                    takeRightPart(i);
+                    if(table.getRobots().get(i).isLeftHand() && table.getRobots().get(i).isRightHand()){
+                        table.getRobots().get(i).chargingRobot();
+                        if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
+                            releaseLeftPart(i);
+                            releaseRightPart(i);
+                        }
+                        }
+
+                    if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
+                        releaseLeftPart(i);
+                        releaseRightPart(i);
+                    }
+                }
+            }
+                else {
+                    sleep(500);
+                }
+
+        }
     }
 
+
     public void gentleman(){
-        System.out.println("Strategy gentleman");
+        for(int i = 0; i <=5; i++) {
+            if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
+                releaseLeftPart(i);
+                releaseRightPart(i);
+            }
+            if(table.getRobots().get(i).getAction() == 3){
+                    takeLeftPart(i);
+                    takeRightPart(i);
+            }
+            if (table.getRobots().get(i).isLeftHand() && table.getRobots().get(i).isRightHand()){
+                table.getRobots().get(i).chargingRobot();
+                if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
+                    releaseLeftPart(i);
+                    releaseRightPart(i);
+                }
+            }
+            try {
+                if(table.getRobots().get(i-1).getCharge() <table.getRobots().get(i).getCharge()
+                        || table.getRobots().get(i+1).getCharge() <table.getRobots().get(i).getCharge()){
+                    releaseLeftPart(i);
+                    releaseRightPart(i);
+                }
+                sleep(200);
+            }
+            catch (IndexOutOfBoundsException e){
+                //table.getRobots().get(i-1).getCharge() <table.getRobots().get(i).getCharge()
+
+                if( table.getRobots().get(0).getCharge() <table.getRobots().get(i).getCharge()){
+                    releaseLeftPart(i);
+                    releaseRightPart(i);
+                }
+                sleep(200);
+            }
+          /*  catch (Exception e){
+                if(table.getRobots().get(5).getCharge() <table.getRobots().get(i).getCharge()
+                        || table.getRobots().get(i+1).getCharge() <table.getRobots().get(i).getCharge()){
+                    releaseLeftPart(i);
+                    releaseRightPart(i);
+                }
+                sleep(200);
+            } */
+        }
     }
 
     @Override

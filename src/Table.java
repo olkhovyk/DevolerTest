@@ -28,13 +28,13 @@ public class Table  {
             e.printStackTrace();
         }
         for(int i = 0; i <= 5; i++){
-            robots.add(new Robot(i, robotsStrategy.get(i), false, false));
-            Thread t = new Thread(robots.get(i));
-            t.start();
+            robots.add(new Robot(i, robotsStrategy.get(i), false, false, this, 50));
+
         }
         for (int i = 0; i <=5; i++){
             parts.add(new Part(i, false));
         }
+        run();
 
     }
 
@@ -42,6 +42,7 @@ public class Table  {
         System.out.println("Введите номера стратегий (1-3) для 6 роботов");
         System.out.println("Или 0 - для выхода");
         while (i != 6){
+            try{
             j = Integer.parseInt(reader.readLine());
             if(j == 1 || j == 2 || j ==3){
                 robotsStrategy.add(j);
@@ -54,33 +55,14 @@ public class Table  {
             else {
                 System.out.println("Введено неправильное число, повторите ввод");
             }
-        }
-        reader.close();
-    }
+            }
+            catch (NumberFormatException e){
+                System.out.println("Введено не число");
+                System.exit(0);
 
-    protected void takeLeftPart(int idRobot){
-        if(!parts.get(robots.get(idRobot).getRobotNumber()).isPartWorking())
-            {
-        parts.get(robots.get(idRobot).getRobotNumber()).setPartWorking(true);
-        robots.get(robots.get(idRobot).getRobotNumber()).setLeftHand(true);
-        }
-    }
-
-    protected void takeRightPart(int idRobot){
-       try {
-           if(!parts.get(robots.get(idRobot).getRobotNumber()+1).isPartWorking())
-           {
-           parts.get(robots.get(idRobot).getRobotNumber()+1).setPartWorking(true);
-           robots.get(robots.get(idRobot).getRobotNumber()).setRightHand(true);
-           }
-       }
-        catch (IndexOutOfBoundsException e){
-            if(!parts.get(0).isPartWorking())
-            {
-            parts.get(0).setPartWorking(true);
-            robots.get(robots.get(idRobot).getRobotNumber()).setRightHand(true);
             }
         }
+        reader.close();
     }
 
     public List<Robot> getRobots() {
@@ -89,6 +71,13 @@ public class Table  {
 
     public List<Part> getParts() {
         return parts;
+    }
+
+    protected void run(){
+        for (int i = 0; i <=5; i++){
+            Thread t = new Thread(robots.get(i));
+            t.start();
+        }
     }
 
 
