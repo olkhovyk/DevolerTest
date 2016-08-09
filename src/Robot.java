@@ -10,11 +10,12 @@ public class Robot implements Runnable {
     private boolean leftHand;
     private boolean rightHand;
     double i;
-        public Robot(int robotNumber, int action, boolean leftHand, boolean rightHand, Table table, int charge) {
+        public Robot(int robotNumber, int action, boolean leftHand, boolean rightHand, Table table, int charge, boolean work) {
             this.robotNumber = robotNumber;
             this.charge = charge;
             this.action = action;
             this.table = table;
+            this.work = work;
 
         }
 
@@ -69,6 +70,10 @@ public class Robot implements Runnable {
     public void chargingRobot(){
             setCharge(charge +=10);
         }
+
+    public void unchargingRobot(){
+        setCharge(charge -=10);
+    }
 
     public void randomSleep() {
             i =  Math.random() * 3;
@@ -152,10 +157,15 @@ public class Robot implements Runnable {
     }
     public void random(){
         for(int i = 0; i <=5; i++) {
+            if(table.getRobots().get(i).isWorking()){
             if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
                 releaseLeftPart(i);
                 releaseRightPart(i);
             }
+                if(table.getRobots().get(i).getCharge() < MAX_CHARGE)
+                {
+                    table.getRobots().get(i).setCharge(100);
+                }
             if(table.getRobots().get(i).getAction() == 1){
             if (table.getRobots().get(i).getCharge() < MAX_CHARGE) {
                     takeLeftPart(i);
@@ -166,6 +176,12 @@ public class Robot implements Runnable {
                 table.getRobots().get(i).chargingRobot();
             }
 
+        }
+            if(table.getRobots().get(i).getCharge() == 0){
+                table.getRobots().get(i).setWorking(false);
+                releaseLeftPart(i);
+                releaseRightPart(i);
+            }
         }
         for (int i = 0; i <= 5; i++){
             if(table.getRobots().get(i).getAction() == 1){
@@ -178,38 +194,44 @@ public class Robot implements Runnable {
 
     public void greedy(){
         for(int i = 0; i <=5; i++){
-            if(table.getRobots().get(i).getAction() == 2){
-                if (table.getRobots().get(i).getCharge() < 60) {
-                    takeLeftPart(i);
-                    takeRightPart(i);
-                    if(table.getRobots().get(i).isLeftHand() && table.getRobots().get(i).isRightHand()){
-                        table.getRobots().get(i).chargingRobot();
-                        if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
+            if(table.getRobots().get(i).isWorking()) {
+                if (table.getRobots().get(i).getAction() == 2) {
+                    if (table.getRobots().get(i).getCharge() < 60) {
+                        takeLeftPart(i);
+                        takeRightPart(i);
+                        if (table.getRobots().get(i).isLeftHand() && table.getRobots().get(i).isRightHand()) {
+                            table.getRobots().get(i).chargingRobot();
+                            if (table.getRobots().get(i).getCharge() == MAX_CHARGE) {
+                                releaseLeftPart(i);
+                                releaseRightPart(i);
+                            }
+                        }
+
+                        if (table.getRobots().get(i).getCharge() == MAX_CHARGE) {
                             releaseLeftPart(i);
                             releaseRightPart(i);
                         }
-                        }
-
-                    if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
+                    }
+                    if(table.getRobots().get(i).getCharge() == 0){
+                        table.getRobots().get(i).setWorking(false);
                         releaseLeftPart(i);
                         releaseRightPart(i);
                     }
-                }
-            }
-                else {
+                } else {
                     sleep(500);
                 }
-
+            }
         }
     }
 
 
     public void gentleman(){
         for(int i = 0; i <=5; i++) {
-            if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
+            if(table.getRobots().get(i).isWorking()) {
+              if(table.getRobots().get(i).getCharge() == MAX_CHARGE){
                 releaseLeftPart(i);
                 releaseRightPart(i);
-            }
+                }
             if(table.getRobots().get(i).getAction() == 3){
                     takeLeftPart(i);
                     takeRightPart(i);
@@ -237,6 +259,12 @@ public class Robot implements Runnable {
                     releaseRightPart(i);
                 }
                 sleep(200);
+            }
+            }
+            if(table.getRobots().get(i).getCharge() == 0){
+                table.getRobots().get(i).setWorking(false);
+                releaseLeftPart(i);
+                releaseRightPart(i);
             }
           /*  catch (Exception e){
                 if(table.getRobots().get(5).getCharge() <table.getRobots().get(i).getCharge()

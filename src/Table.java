@@ -28,7 +28,7 @@ public class Table  {
             e.printStackTrace();
         }
         for(int i = 0; i <= 5; i++){
-            robots.add(new Robot(i, robotsStrategy.get(i), false, false, this, 50));
+            robots.add(new Robot(i, robotsStrategy.get(i), false, false, this, 50, true));
 
         }
         for (int i = 0; i <=5; i++){
