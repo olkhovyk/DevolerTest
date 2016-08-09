@@ -14,6 +14,7 @@ public class Table  {
     BufferedReader reader;
     int i = 0;
     int j;
+    private boolean test = false;
 
 
 
@@ -37,6 +38,7 @@ public class Table  {
         run();
 
     }
+
 
     private void setRobotStrategy() throws IOException {
         System.out.println("Введите номера стратегий (1-3) для 6 роботов");
@@ -73,10 +75,33 @@ public class Table  {
         return parts;
     }
 
+    public boolean isTest() {
+        return test;
+    }
+
+    public void setTest(boolean test) {
+        this.test = test;
+    }
+
     protected void run(){
         for (int i = 0; i <=5; i++){
             Thread t = new Thread(robots.get(i));
             t.start();
+        }
+    }
+
+    public void test(){
+        if((getRobots().get(0).getCharge() == 0 ||getRobots().get(0).getCharge() == 0) &&
+                (getRobots().get(1).getCharge() == 0 ||getRobots().get(1).getCharge() == 0) &&
+                (getRobots().get(2).getCharge() == 0 ||getRobots().get(2).getCharge() == 0) &&
+                (getRobots().get(3).getCharge() == 0 ||getRobots().get(3).getCharge() == 0) &&
+                (getRobots().get(4).getCharge() == 0 ||getRobots().get(4).getCharge() == 0) &&
+                (getRobots().get(5).getCharge() == 0 ||getRobots().get(5).getCharge() == 0)  )
+        {
+            setTest(true);
+        }
+        else {
+            setTest(false);
         }
     }
 

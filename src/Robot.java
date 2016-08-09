@@ -10,6 +10,7 @@ public class Robot implements Runnable {
     private boolean leftHand;
     private boolean rightHand;
     double i;
+
         public Robot(int robotNumber, int action, boolean leftHand, boolean rightHand, Table table, int charge, boolean work) {
             this.robotNumber = robotNumber;
             this.charge = charge;
@@ -19,7 +20,9 @@ public class Robot implements Runnable {
 
         }
 
-        public int getRobotNumber() {
+
+
+    public int getRobotNumber() {
         return robotNumber;
     }
 
@@ -172,7 +175,7 @@ public class Robot implements Runnable {
                     takeRightPart(i);
                 }
             }
-            if (table.getRobots().get(i).isLeftHand() && table.getRobots().get(i).isRightHand()){
+            if (table.getRobots().get(i).isLeftHand() == true && table.getRobots().get(i).isRightHand() == true){
                 table.getRobots().get(i).chargingRobot();
             }
 
@@ -252,7 +255,6 @@ public class Robot implements Runnable {
                 sleep(200);
             }
             catch (IndexOutOfBoundsException e){
-                //table.getRobots().get(i-1).getCharge() <table.getRobots().get(i).getCharge()
 
                 if( table.getRobots().get(0).getCharge() <table.getRobots().get(i).getCharge()){
                     releaseLeftPart(i);
@@ -266,14 +268,7 @@ public class Robot implements Runnable {
                 releaseLeftPart(i);
                 releaseRightPart(i);
             }
-          /*  catch (Exception e){
-                if(table.getRobots().get(5).getCharge() <table.getRobots().get(i).getCharge()
-                        || table.getRobots().get(i+1).getCharge() <table.getRobots().get(i).getCharge()){
-                    releaseLeftPart(i);
-                    releaseRightPart(i);
-                }
-                sleep(200);
-            } */
+
         }
     }
 
@@ -281,6 +276,8 @@ public class Robot implements Runnable {
     public void run() {
         strategy(action);
     }
+
+
 
 
 }
