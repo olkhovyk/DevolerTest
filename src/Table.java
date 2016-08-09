@@ -39,6 +39,11 @@ public class Table  {
 
     }
 
+    /**
+    *
+    * Ввводим стратегии роботам
+    *
+     */
 
     private void setRobotStrategy() throws IOException {
         System.out.println("Введите номера стратегий (1-3) для 6 роботов");
@@ -83,13 +88,19 @@ public class Table  {
         this.test = test;
     }
 
+    /**
+    *
+    * Запускаем робота в отдельном потоке
+     */
     protected void run(){
         for (int i = 0; i <=5; i++){
             Thread t = new Thread(robots.get(i));
             t.start();
         }
     }
-
+    /**
+    * Проверка на соответствие требованиям завершения моделирования
+     */
     public void test(){
         if((getRobots().get(0).getCharge() == 0 ||getRobots().get(0).getCharge() == 0) &&
                 (getRobots().get(1).getCharge() == 0 ||getRobots().get(1).getCharge() == 0) &&

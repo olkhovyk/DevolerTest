@@ -100,7 +100,9 @@ public class Robot implements Runnable {
         }
 
     }
-
+    /**
+    берем части в руки
+     */
     protected void takeRightPart(int robot){
         try {
             if(!table.getParts().get(table.getRobots().get(robot).getRobotNumber()+1).isPartWorking())
@@ -126,6 +128,9 @@ public class Robot implements Runnable {
         }
     }
 
+    /**
+    Отпускаем части из рук роботов
+     */
     protected void releaseLeftPart(int robot){
         if(table.getParts().get(table.getRobots().get(robot).getRobotNumber()).isPartWorking())
         {
@@ -158,6 +163,10 @@ public class Robot implements Runnable {
             System.out.println("Wrong strategy");
         }
     }
+    /**
+    Стратегия Случайная
+     */
+
     public void random(){
         for(int i = 0; i <=5; i++) {
             if(table.getRobots().get(i).isWorking()){
@@ -194,7 +203,9 @@ public class Robot implements Runnable {
         }
         randomSleep();
     }
-
+    /**
+    Стратегия жадная
+     */
     public void greedy(){
         for(int i = 0; i <=5; i++){
             if(table.getRobots().get(i).isWorking()) {
@@ -227,7 +238,9 @@ public class Robot implements Runnable {
         }
     }
 
-
+    /**
+    Стратегия Джентельмен
+     */
     public void gentleman(){
         for(int i = 0; i <=5; i++) {
             if(table.getRobots().get(i).isWorking()) {
